@@ -1,0 +1,16 @@
+[project]
+name = "playporter"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = ["crewai", "crewai-tools", "playwright"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+run_crew = "playporter.main:main"
+playporter = "playporter.main:main"
+
+[tool.crewai]
+type = "crew"

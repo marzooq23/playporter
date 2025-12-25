@@ -1,0 +1,44 @@
+analyze_selenium_task:
+  description: >
+    Inventory a Selenium test project located at {selenium_project_path}. Identify test files,
+    WebDriver usage patterns, common selectors, external fixtures, and any custom helpers.
+  expected_output: >
+    JSON object listing discovered files, high-level summary of patterns found, and a risk score per file.
+  agent: code_analyzer
+
+migrate_tests_task:
+  description: >
+    Convert discovered Selenium tests to Playwright. For each file produce a converted version
+    that preserves intent, updates selectors where necessary, and replaces Selenium APIs with Playwright equivalents.
+  expected_output: >
+    A set of converted files and a mapping of original -> converted file paths ready for review.
+  agent: migration_engineer
+
+diff_review_task:
+  description: >
+    Produce unified diffs between original and converted files. Summarize risky or manual-review-required changes.
+  expected_output: >
+    Unified diffs for each file plus a short reviewer commentary per diff.
+  agent: diff_reviewer
+
+validate_migration_task:
+  description: >
+    Run Playwright tests in the target folder, collect reports, and annotate failing tests for troubleshooting.
+  expected_output: >
+    Playwright test results JSON and a summary of failing/skipping tests with suspected causes.
+  agent: qa_validator
+
+git_commit_task:
+  description: >
+    Create a new branch `playwright-migration`, add converted files, and commit with a clear message.
+  expected_output: >
+    Branch created and commit SHA returned.
+  agent: migration_engineer
+
+generate_docs_task:
+  description: >
+    Produce a human-readable migration report (markdown) describing what was changed, how to run the new tests,
+    and any caveats or follow-up work.
+  expected_output: >
+    A `migration_report.md` file content and path.
+  agent: documentation_agent
