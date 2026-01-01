@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "playporter"
+version = "0.0.1"
+description = "AI-powered Selenium → Playwright migration tools"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["crewai", "crewai-tools", "playwright"]
+
+[project.scripts]
+playporter = "playporter.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
