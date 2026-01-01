@@ -1,89 +1,73 @@
+<p align="center">
+  <img src="./docs/playporter_logo.png" alt="PlayPorter logo" width="600"/>
+</p>
+
 # 🎭 PlayPorter — AI-Powered Selenium → Playwright Migration Crew
 
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![CrewAI](https://img.shields.io/badge/CrewAI-Agentic_Framework-orange.svg)](https://github.com/joaomdmoura/crewai)
 [![Playwright](https://img.shields.io/badge/Playwright-Automation-green.svg)](https://playwright.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/yourusername/playporter/ci.yml?branch=main&logo=github)](https://github.com/yourusername/playporter/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/marzooq23/playporter/.github/workflows/ci.yml?branch=main&logo=github)](https://github.com/marzooq23/playporter/actions)
 
 ---
 
-**PlayPorter** is an agentic ecosystem built with [CrewAI](https://github.com/joaomdmoura/crewai) that intelligently migrates existing **Selenium** test frameworks to **Playwright**.
+**PlayPorter** is an agentic ecosystem built with [CrewAI](https://github.com/crewAIInc/crewAI) that intelligently migrates existing **Selenium** test frameworks to **Playwright**.
 
 It uses a coordinated team of AI agents to:
-- 🧠 Analyze Selenium test suites  
-- ⚙️ Convert them into Playwright equivalents  
-- 🧪 Validate correctness via runtime testing  
-- 🔍 Review diffs between old and new code  
-- 🪣 Commit results to Git automatically  
-- 📄 Generate a detailed migration report  
+- Analyze Selenium test suites
+- Maps and stores code relationships in-memory 
+- Migrates them into Playwright equivalents  
+- Validate correctness via runtime testing  
+- Review diffs between old and new code  
+- Commit results to Git automatically  
+- Generate a detailed migration report
 
 ---
 
-## 🚀 Features
+## 🤖 Agentic Ecosystem
 
-| Capability | Description |
-|-------------|--------------|
-| 🧠 **Code Analysis** | Extracts Selenium test logic, locators, and dependencies. |
-| ⚙️ **Automated Migration** | Converts Selenium syntax to Playwright async patterns. |
-| 🧪 **Runtime Validation** | Executes Playwright tests and captures structured results. |
-| 🔍 **Diff Review** | Provides line-by-line differences between old and new tests. |
-| 🪣 **Git Integration** | Automatically commits converted tests to a new branch. |
-| 📄 **Documentation** | Generates a Markdown migration summary and results report. |
-
----
-
-## 🧬 Agentic Ecosystem
+<p align="center">
+  <img src="./docs/playporter_swimlane.jpg" alt="PlayPorter Swimlane" />
+</p>
 
 | Agent | Role | Tools |
 |--------|------|--------|
-| **Code Analyzer** | Understands Selenium tests and locators. | `FileReadTool`, `SerperDevTool` |
-| **Migration Engineer** | Converts Selenium to Playwright and commits results. | `SeleniumToPlaywrightConverter`, `GitCommitTool` |
-| **QA Validator** | Runs Playwright tests to confirm migration success. | `PlaywrightRunnerTool` |
-| **Diff Reviewer** | Reviews differences between Selenium and Playwright scripts. | `CodeDiffTool` |
-| **Documentation Agent** | Creates the final migration report. | `FileWriteTool` |
+| **Sensei** | Understands Selenium test structures, reads source files, and maps locators and test flows into structured contexts for migration. | `FileReadTool`, `CodeAtlas` |
+| **Alchemist** | Transforms Selenium code into Playwright syntax, manages element mappings, and commits generated scripts to the repository. | `SeleniumToPlaywrightConverter`, `Migrator` |
+| **Sentinel** | Executes migrated Playwright tests, performs quality checks, and validates that behavior matches the Selenium baseline. | `PlaywrightRunnerTool`, `BuildTool`. `CodeDiffTool` |
+| **Healer** | Detects flaky or failed migrations, applies automated repairs, and re-validates fixed scripts before closure. | `CodeDiffTool`, `HealingTool` |
 
 ---
 
-## 🗂 Project Structure
-
-```text
-playporter/
-├── README.md
-├── pyproject.toml
-└── src/
-    └── playporter/
-        ├── crew.py
-        ├── main.py
-        ├── config/
-        │   ├── agents.yaml
-        │   └── tasks.yaml
-        └── tools/
-            ├── selenium_to_playwright_tool.py
-            ├── playwright_runner_tool.py
-            ├── code_diff_tool.py
-            └── git_commit_tool.py
-```
-
-
 ## ⚙️ Setup & Usage
 
-### 1️⃣ Install Dependencies
+### 1️⃣ Create venv
 ```bash
+python -m venv .venv
+
+.\.venv\bin\Activate.ps1
+```
+
+### 2️⃣ Install Dependencies
+```bash
+python -m pip install --upgrade pip setuptools wheel
+
+pip install -e .
+
 pip install crewai crewai-tools playwright
-npx playwright install
+
+npx playwright install chromium
 ```
 
-### 2️⃣ Run PlayPorter
+### 3️⃣ Run PlayPorter
 ```bash
-python -m src.playporter.main
+# Run the CLI (after installing this package)
+playporter -m "selenium-framework-path" "path-for-new-playwright-framework"
+
+# With Target Language Binding
+playporter --migrate "selenium-framework-path" "path-for-new-playwright-framework" "typescript"
+
+# Or run directly with Python (one-off)
+python -m src.playporter.main --migrate "selenium-framework-path" "path-for-new-playwright-framework" "typescript"
 ```
-
-### 3️⃣ Configuration
-
-Edit the main.py inputs to match your project paths:
-
-crew.kickoff(inputs={
-    "selenium_project_path": "./old_selenium_tests/",
-    "test_report_path": "./playwright_migrated_tests/results.json"
-})
